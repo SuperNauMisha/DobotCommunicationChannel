@@ -61,22 +61,6 @@ sides = {"right": {"x": 225.5, "y": 212, "z": 60, "r": 45},
 
 device.speed(1000, 1000)
 
-# j = input("nac: ")
-# stor = POSES[j]["s"]
-#
-# while True:
-#     j = input("efe: ")
-#
-#     if stor != POSES[j]["s"]:
-#         device.move_to(sides[stor]["x"], sides[stor]["y"],
-#                        sides[stor]["z"], sides[stor]["r"], wait=False)
-#         device.move_to(sides["mid"]["x"], sides["mid"]["y"],
-#                        sides["mid"]["z"], sides["mid"]["r"], wait=False)
-#         device.move_to(sides[POSES[j]["s"]]["x"], sides[POSES[j]["s"]]["y"],
-#                        sides[POSES[j]["s"]]["z"], sides[POSES[j]["s"]]["r"], wait=False)
-#         stor = POSES[j]["s"]
-#     device.move_to(POSES[j]["x"], POSES[j]["y"], POSES[j]["z"], POSES[j]["r"], wait=True)
-#     print("dobot is going to  ", j)
 
 """
 Начало движения
@@ -90,8 +74,6 @@ for i in word:
     keys.append(ABC[i])
 
 stor = POSES[keys[0][0]]["s"]
-
-device.speed(1000, 1000)
 
 device.move_to(sides["mid"]["x"], sides["mid"]["y"],
                sides["mid"]["z"], sides["mid"]["r"], wait=False)
