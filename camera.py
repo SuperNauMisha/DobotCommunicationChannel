@@ -14,6 +14,8 @@ r_click_counter = 0
 base = [640 // 2 - 20, 480 // 2 - 20, 640 // 2 + 20, 480 // 2 + 20]
 kx = 2.1
 ky = 3.1
+lastestx = [640 // 2, 640 // 2, 640 // 2, 640 // 2, 640 // 2]
+lastesty = [480 // 2, 480 // 2, 480 // 2, 480 // 2, 480 // 2]
 kzon1x = 1.0
 kzon2x = 1.1
 kzon1y = 1.5
@@ -54,6 +56,7 @@ ABC = {'01': 'a',
 
 def current_time():
     return round(time.time() * 1000)
+
 def changeHLow(value):
     global h_low
     h_low = value
@@ -151,7 +154,7 @@ cv2.createTrackbar("v high", "trackbars", v_high, 255, changeVHigh)
 
 cv2.setMouseCallback("frame", click)
 timer = current_time()
-porog_time = 3000
+porog_time = 2900
 old_zone = -1
 letters = ""
 read = False
@@ -193,7 +196,7 @@ while True:
         cy = int(obj["m01"] / obj["m00"]) + y0
         cv2.circle(frame, (cx, cy), 20, (255, 0, 0), 3)
         if read:
-            if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx, cy) != -1:
+            if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx, cy) != -1 and abs(cx - sum(lastestx)) <= 5 and abs(cy - sum(lastesty)) <= 5:
                 if getCurrentZone(cx, cy) == 10:
                     read = False
                     print(full_ans)
@@ -205,9 +208,12 @@ while True:
                         full_ans += ABC[letters]
                         letters = ""
                 timer = current_time()
-        elif getCurrentZone(cx, cy) != old_zone:
+        elif getCurrentZone(cx, cy) != old_zone or abs(cx - sum(lastestx)) > 5 or abs(cy - sum(lastesty)) > 5:
             timer = current_time()
-        # print(getCurrentZone(cx, cy), current_time())
+        del lastestx[0]
+        del lastesty[0]
+        lastestx.append(cx)
+        lastesty.append(cy)
         old_zone = getCurrentZone(cx, cy)
     cv2.imshow("frame", frame)
     cv2.imshow("hsv Frame", hsv_frame)
