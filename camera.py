@@ -132,7 +132,7 @@ def getCurrentZone(x, y):
         elif x < xzone2:
             ans = 4
         elif x < xzone3:
-            pass
+            ans = 10
         elif x < xzone4:
             ans = 9
         elif x < x1:
@@ -154,7 +154,8 @@ timer = current_time()
 porog_time = 3000
 old_zone = -1
 letters = ""
-start = False
+read = False
+full_ans = ""
 while True:
 
     x0 = int(base[0] - abs(base[2] - base[0]) * kx)
@@ -191,15 +192,19 @@ while True:
         cx = int(obj["m10"] / obj["m00"]) + x0
         cy = int(obj["m01"] / obj["m00"]) + y0
         cv2.circle(frame, (cx, cy), 20, (255, 0, 0), 3)
-        if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx, cy) != -1:
-            letters += str(getCurrentZone(cx, cy))
-            print(letters)
-            if len(letters) == 2:
-                print(ABC[letters])
-                letters = ""
-            timer = current_time()
-
-
+        if read:
+            if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx, cy) != -1:
+                if getCurrentZone(cx, cy) == 10:
+                    read = False
+                    print(full_ans)
+                else:
+                    letters += str(getCurrentZone(cx, cy))
+                    print(letters)
+                    if len(letters) == 2:
+                        print(ABC[letters])
+                        full_ans += ABC[letters]
+                        letters = ""
+                timer = current_time()
         elif getCurrentZone(cx, cy) != old_zone:
             timer = current_time()
         # print(getCurrentZone(cx, cy), current_time())
@@ -208,6 +213,10 @@ while True:
     cv2.imshow("hsv Frame", hsv_frame)
     cv2.imshow("mask", mask)
 
+    if cv2.waitKey(1) == ord('r'):
+        read = not read
+        timer = current_time()
+        print("read = ", read)
     if cv2.waitKey(1) == ord('q'):
         break
 
