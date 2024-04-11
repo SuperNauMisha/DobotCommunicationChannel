@@ -1,6 +1,9 @@
 import time
+
 import pydobot
 from serial.tools import list_ports
+
+from camera import ABC as CBA
 
 available_ports = list_ports.comports()
 print(f'available ports: {[x.device for x in available_ports]}')
@@ -18,38 +21,6 @@ POSES = {'0': {'s': 'left', 'x': 0, 'y': -225.0, 'z': 55, 'r': -90},
          '7': {'s': 'right', 'x': 0, 'y': 340.0, 'z': 40, 'r': 90},
          '8': {'s': 'right', 'x': 0, 'y': 325.0, 'z': 127.0, 'r': 90},
          '9': {'s': 'right', 'x': 0, 'y': 215.0, 'z': -60, 'r': 90}}
-
-CBA = {'01': 'a',
-       '02': 'b',
-       '03': 'c',
-       '04': 'd',
-       '10': 'e',
-       '12': 'f',
-       '13': 'g',
-       '14': 'h',
-       '20': 'i',
-       '21': 'j',
-       '23': 'k',
-       '24': 'l',
-       '30': 'm',
-       '31': 'n',
-       '32': 'o',
-       '34': 'p',
-       '40': 'q',
-       '41': 'r',
-       '42': 's',
-       '43': 't',
-       '56': 'u',
-       '57': 'v',
-       '58': 'w',
-       '59': 'x',
-       '65': 'y',
-       '67': 'z',
-       '68': ' ',
-       '69': '.',
-       '75': ',',
-       '76': '!',
-       '78': '?'}
 
 ABC = {"a": "01",
        "b": "02",
@@ -152,7 +123,3 @@ print("dobot's message is over")
 print("".join(word))
 
 device.close()
-
-# while input() != "end":
-#     (x, y, z, r, j1, j2, j3, j4) = device.pose()
-#     print(f'"x":{round(x, 1)}, "y":{round(y, 1)}, "z":{round(z, 1)}, "r":{round(r, 1)}')
