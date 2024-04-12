@@ -196,8 +196,6 @@ while True:
         cy = int(obj["m01"] / obj["m00"]) + y0
         cv2.circle(frame, (cx, cy), 20, (255, 0, 0), 3)
         if read:
-            print(getCurrentZone(cx, cy) == old_zone, current_time() - timer > porog_time, getCurrentZone(cx, cy) != -1, abs(cx - int(sum(lastestx) / 5)) <= 5, abs(cy - int(sum(lastesty) / 5)) <= 5)
-            #print(getCurrentZone(cx, cy), current_time() - timer, abs(cx - int(sum(lastestx) / 5)), abs(cy - int(sum(lastesty) / 5)))
             if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx, cy) != -1 and abs(cx - int(sum(lastestx) / 5)) <= 5 and abs(cy - int(sum(lastesty) / 5)) <= 5:
                 print("yes")
                 if getCurrentZone(cx, cy) == 10:
@@ -212,7 +210,6 @@ while True:
                         letters = ""
                 timer = current_time()
             elif getCurrentZone(cx, cy) != old_zone or abs(cx - int(sum(lastestx) / 5)) > 5 or abs(cy - int(sum(lastesty) / 5)) > 5:
-                print(getCurrentZone(cx, cy) != old_zone, abs(cx - sum(lastestx) / 5) > 5, abs(cy - sum(lastesty)) > 5)
                 print("reset")
                 timer = current_time()
         del lastestx[0]
