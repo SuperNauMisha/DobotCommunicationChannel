@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
 import time
-from gestures import msg_out
+from gestures import msg_out, sides
+import pydobot
+from serial.tools import list_ports
 
 cap = cv2.VideoCapture(0)
 h_low = 0
@@ -142,6 +144,16 @@ def getCurrentZone(x, y):
             pass
     return ans
 
+available_ports = list_ports.comports()
+print(f'available ports: {[x.device for x in available_ports]}')
+port = available_ports[0].device
+
+device = pydobot.Dobot(port=port, verbose=False)
+
+device.speed(1000, 1000)
+device.move_to(sides["mid"]["x"], sides["mid"]["y"],
+               sides["mid"]["z"], sides["mid"]["r"], wait=True)
+
 
 cv2.namedWindow("trackbars")
 cv2.namedWindow("frame")
@@ -211,9 +223,9 @@ while True:
                             letters = ""
                         except Exception:
                             print("Cannot find letter on index", letters)
+                            letters = ""
                 timer = current_time()
             elif getCurrentZone(cx, cy) != old_zone or abs(cx - int(sum(lastestx) / 5)) > 5 or abs(cy - int(sum(lastesty) / 5)) > 5:
-                print("reset")
                 timer = current_time()
         del lastestx[0]
         del lastesty[0]
