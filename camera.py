@@ -154,7 +154,7 @@ cv2.createTrackbar("v high", "trackbars", v_high, 255, changeVHigh)
 
 cv2.setMouseCallback("frame", click)
 timer = current_time()
-porog_time = 2900
+porog_time = 2700
 old_zone = -1
 letters = ""
 read = False
@@ -196,7 +196,8 @@ while True:
         cy = int(obj["m01"] / obj["m00"]) + y0
         cv2.circle(frame, (cx, cy), 20, (255, 0, 0), 3)
         if read:
-            if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx, cy) != -1 and abs(cx - sum(lastestx)) <= 5 and abs(cy - sum(lastesty)) <= 5:
+            if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx, cy) != -1 and abs(cx - int(sum(lastestx) / 5)) <= 5 and abs(cy - int(sum(lastesty) / 5)) <= 5:
+                print("yes")
                 if getCurrentZone(cx, cy) == 10:
                     read = False
                     print(full_ans)
@@ -208,8 +209,9 @@ while True:
                         full_ans += ABC[letters]
                         letters = ""
                 timer = current_time()
-        elif getCurrentZone(cx, cy) != old_zone or abs(cx - sum(lastestx)) > 5 or abs(cy - sum(lastesty)) > 5:
-            timer = current_time()
+            elif getCurrentZone(cx, cy) != old_zone or abs(cx - int(sum(lastestx) / 5)) > 5 or abs(cy - int(sum(lastesty) / 5)) > 5:
+                print("reset")
+                timer = current_time()
         del lastestx[0]
         del lastesty[0]
         lastestx.append(cx)
