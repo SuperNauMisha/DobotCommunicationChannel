@@ -3,16 +3,27 @@ import time
 import pydobot
 from serial.tools import list_ports
 
-POSES = {'0': {'s': 'left', 'x': 0, 'y': -225.0, 'z': 55, 'r': -90},
-         '1': {'s': 'left', 'x': 0, 'y': -225.0, 'z': 145, 'r': -90},
-         '2': {'s': 'left', 'x': 0, 'y': -340, 'z': 40, 'r': -90},
-         '3': {'s': 'left', 'x': 0, 'y': -325.0, 'z': -60, 'r': -90},
-         '4': {'s': 'left', 'x': 0, 'y': -215.0, 'z': -60, 'r': -90},
-         '5': {'s': 'right', 'x': 0, 'y': 225.0, 'z': 55, 'r': 90},
-         '6': {'s': 'right', 'x': 0, 'y': 225.0, 'z': 145, 'r': 90},
-         '7': {'s': 'right', 'x': 0, 'y': 340.0, 'z': 40, 'r': 90},
-         '8': {'s': 'right', 'x': 0, 'y': 325.0, 'z': 127.0, 'r': 90},
-         '9': {'s': 'right', 'x': 0, 'y': 215.0, 'z': -60, 'r': 90}}
+# POSES = {'0': {'s': 'left', 'x': 0, 'y': -225.0, 'z': 55, 'r': -90},
+#          '1': {'s': 'left', 'x': 0, 'y': -225.0, 'z': 145, 'r': -90},
+#          '2': {'s': 'left', 'x': 0, 'y': -340, 'z': 40, 'r': -90},
+#          '3': {'s': 'left', 'x': 0, 'y': -325.0, 'z': -60, 'r': -90},
+#          '4': {'s': 'left', 'x': 0, 'y': -215.0, 'z': -60, 'r': -90},
+#          '5': {'s': 'right', 'x': 0, 'y': 225.0, 'z': 55, 'r': 90},
+#          '6': {'s': 'right', 'x': 0, 'y': 225.0, 'z': 145, 'r': 90},
+#          '7': {'s': 'right', 'x': 0, 'y': 340.0, 'z': 40, 'r': 90},
+#          '8': {'s': 'right', 'x': 0, 'y': 325.0, 'z': 127.0, 'r': 90},
+#          '9': {'s': 'right', 'x': 0, 'y': 215.0, 'z': -60, 'r': 90}}
+
+POSES = {'0': {'j1': -90.0, 'j2': 11.58477783203125, 'j3': 37.76371765136719},
+         '1': {'j1': -90.0, 'j2': -0.304290771484375, 'j3': 1.2622052431106567},
+         '2': {'j1': -90.0, 'j2': 54.439292907714844, 'j3': 18.293170928955078},
+         '3': {'j1': -90.0, 'j2': 72.42658996582031, 'j3': 45.11402130126953},
+         '4': {'j1': -90.0, 'j2': 54.04650115966797, 'j3': 83.9808349609375},
+         '5': {'j1': 90.0, 'j2': 11.950546264648438, 'j3': 38.35327911376953},
+         '6': {'j1': 90.0, 'j2': -0.2900543212890625, 'j3': 1.802386999130249},
+         '7': {'j1': 90.0, 'j2': 54.85091781616211, 'j3': 19.04833984375},
+         '8': {'j1': 90.0, 'j2': 41.898094177246094, 'j3': -5.440191745758057},
+         '9': {'j1': 90.0, 'j2': 54.605735778808594, 'j3': 84.31359100341797}}
 
 alphabet = {"a": "01",
             "b": "02",
@@ -46,10 +57,15 @@ alphabet = {"a": "01",
             "!": "76",
             "?": "78"}
 
-sides = {"right": {"x": 225.5, "y": 212, "z": 60, "r": 45},
-         "left": {"x": 225.5, "y": -200, "z": 60, "r": -45},
-         "mid": {"x": 225.5, "y": 0, "z": 60, "r": 0},
-         "end": {"x": 225.5, "y": 0, "z": -10, "r": 0}}
+# sides = {"right": {"x": 225.5, "y": 212, "z": 60},
+#          "left": {"x": 225.5, "y": -200, "z": 60},
+#          "mid": {"x": 225.5, "y": 0, "z": 60},
+#          "end": {"x": 225.5, "y": 0, "z": -10}}
+
+sides = {"right": {"j1": 43.2, "j2": 39.4, "j3": 24},
+         "left": {"j1": -41.6, "j2": 36.2, "j3": 24},
+         "mid": {"j1": 0, "j2": 10.5, "j3": 36},
+         "end": {"j1": 0, "j2": 34, "j3": 64}}
 
 
 # device.speed(1000, 1000)
@@ -70,41 +86,38 @@ def msg_out(word):
 
     word = word.lower()
     device.speed(1000, 1000)
-    device.move_to(sides["mid"]["x"], sides["mid"]["y"],
-                   sides["mid"]["z"], sides["mid"]["r"], wait=True)
+
     keys = []
 
     for i in word:
         keys.append(alphabet[i])
 
-    stor = POSES[keys[0][0]]["s"]
-
-    device.move_to(sides["mid"]["x"], sides["mid"]["y"],
-                   sides["mid"]["z"], sides["mid"]["r"], wait=False)
-    device.move_to(sides[stor]["x"], sides[stor]["y"],
-                   sides[stor]["z"], sides[stor]["r"], wait=False)
+    # stor = POSES[keys[0][0]]["s"]
+    #
+    # device.move_to(sides["mid"]["x"], sides["mid"]["y"],
+    #                sides["mid"]["z"], sides["mid"]["r"], wait=False)
+    # device.move_to(sides[stor]["x"], sides[stor]["y"],
+    #                sides[stor]["z"], sides[stor]["r"], wait=False)
 
     for n, i in enumerate(keys):
         for j in i:
-            if stor != POSES[j]["s"]:
-                device.move_to(sides[stor]["x"], sides[stor]["y"],
-                               sides[stor]["z"], sides[stor]["r"], wait=False)
-                device.move_to(sides["mid"]["x"], sides["mid"]["y"],
-                               sides["mid"]["z"], sides["mid"]["r"], wait=False)
-                device.move_to(sides[POSES[j]["s"]]["x"], sides[POSES[j]["s"]]["y"],
-                               sides[POSES[j]["s"]]["z"], sides[POSES[j]["s"]]["r"], wait=False)
-                stor = POSES[j]["s"]
-            device.move_to(POSES[j]["x"], POSES[j]["y"], POSES[j]["z"], POSES[j]["r"], wait=True)
+            # if stor != POSES[j]["s"]:
+                # device.move_to(sides[stor]["x"], sides[stor]["y"],
+                #                sides[stor]["z"], sides[stor]["r"], wait=False)
+                # device.move_to(sides["mid"]["x"], sides["mid"]["y"],
+                #                sides["mid"]["z"], sides["mid"]["r"], wait=False)
+                # device.move_to(sides[POSES[j]["s"]]["x"], sides[POSES[j]["s"]]["y"],
+                #                sides[POSES[j]["s"]]["z"], sides[POSES[j]["s"]]["r"], wait=False)
+                # stor = POSES[j]["s"]
+            device.angle(POSES[j]["j1"], POSES[j]["j2"], POSES[j]["j3"], wait=True)
             print(f"dobot came to position {j} in {i} for '{word[n]}' in {"".join(word)}")
             time.sleep(2)
 
-    device.move_to(sides[stor]["x"], sides[stor]["y"],
-                   sides[stor]["z"], sides[stor]["r"], wait=False)
-    device.move_to(sides["end"]["x"], sides["end"]["y"],
-                   sides["end"]["z"], sides["end"]["r"], wait=True)
+    device.angle(sides["end"]["j1"], sides["end"]["j2"],
+                   sides["end"]["j3"], wait=True)
     time.sleep(2.5)
-    device.move_to(sides["mid"]["x"], sides["mid"]["y"],
-                   sides["mid"]["z"], sides["mid"]["r"], wait=False)
+    device.angle(sides["mid"]["j1"], sides["mid"]["j2"],
+                   sides["mid"]["j3"], wait=False)
     print("dobot's message is over")
     print("".join(word))
 

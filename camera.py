@@ -59,25 +59,31 @@ ABC = {'01': 'a',
 def current_time():
     return round(time.time() * 1000)
 
+
 def changeHLow(value):
     global h_low
     h_low = value
+
 
 def changeHHigh(value):
     global h_high
     h_high = value
 
+
 def changeSLow(value):
     global s_low
     s_low = value
+
 
 def changeSHigh(value):
     global s_high
     s_high = value
 
+
 def changeVLow(value):
     global v_low
     v_low = value
+
 
 def changeVHigh(value):
     global v_high
@@ -144,6 +150,7 @@ def getCurrentZone(x, y):
             pass
     return ans
 
+
 available_ports = list_ports.comports()
 print(f'available ports: {[x.device for x in available_ports]}')
 port = available_ports[0].device
@@ -151,8 +158,8 @@ port = available_ports[0].device
 device = pydobot.Dobot(port=port, verbose=False)
 
 device.speed(1000, 1000)
-device.move_to(sides["mid"]["x"], sides["mid"]["y"],
-               sides["mid"]["z"], sides["mid"]["r"], wait=True)
+device.angle(sides["mid"]["j1"], sides["mid"]["j2"],
+             sides["mid"]["j3"], wait=True)
 device.close()
 
 cv2.namedWindow("trackbars")
@@ -191,7 +198,7 @@ while True:
     cv2.rectangle(frame, (base[0], base[1]), (base[2], base[3]), (0, 255, 0), 3)
     cv2.rectangle(frame, (x0, y0), (x1, base[3]), (0, 255, 0), 3)
     xzone1 = int(x0 + abs(base[2] - base[0]) * kzon1x)
-    cv2.line(frame, (xzone1,  y0), (xzone1, base[3]), (0, 255, 0), 3)
+    cv2.line(frame, (xzone1, y0), (xzone1, base[3]), (0, 255, 0), 3)
     xzone2 = int(xzone1 + abs(base[2] - base[0]) * kzon2x)
     cv2.line(frame, (xzone2, y0), (xzone2, base[3]), (0, 255, 0), 3)
     xzone4 = int(x1 - abs(base[2] - base[0]) * kzon1x)
@@ -208,7 +215,9 @@ while True:
         cy = int(obj["m01"] / obj["m00"]) + y0
         cv2.circle(frame, (cx, cy), 20, (255, 0, 0), 3)
         if read:
-            if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx, cy) != -1 and abs(cx - int(sum(lastestx) / 5)) <= 5 and abs(cy - int(sum(lastesty) / 5)) <= 5:
+            if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx,
+                                                                                                             cy) != -1 and abs(
+                    cx - int(sum(lastestx) / 5)) <= 5 and abs(cy - int(sum(lastesty) / 5)) <= 5:
                 if getCurrentZone(cx, cy) == 10:
                     read = False
                     print(full_ans)
@@ -224,7 +233,8 @@ while True:
                             print("Cannot find letter on index", letters)
                             letters = ""
                 timer = current_time()
-            elif getCurrentZone(cx, cy) != old_zone or abs(cx - int(sum(lastestx) / 5)) > 5 or abs(cy - int(sum(lastesty) / 5)) > 5:
+            elif getCurrentZone(cx, cy) != old_zone or abs(cx - int(sum(lastestx) / 5)) > 5 or abs(
+                    cy - int(sum(lastesty) / 5)) > 5:
                 timer = current_time()
         del lastestx[0]
         del lastesty[0]
