@@ -60,7 +60,6 @@ sides = {"right": {"x": 225.5, "y": 212, "z": 60, "r": 45},
 #     y = input("fdf: ")
 #     device.move_to(POSES[y]["x"], POSES[y]["y"], POSES[y]["z"], POSES[y]["r"], wait=True)
 
-
 def msg_out(word):
     available_ports = list_ports.comports()
     print(f'available ports: {[x.device for x in available_ports]}')
