@@ -100,7 +100,7 @@ def msg_out(word):
 
     device.angle(sides["end"]["j1"], sides["end"]["j2"],
                  sides["end"]["j3"], wait=True)
-    time.sleep(2.5)
+    time.sleep(1.5)
     device.angle(sides["mid"]["j1"], sides["mid"]["j2"],
                  sides["mid"]["j3"], wait=False)
     print("dobot's message is over")
