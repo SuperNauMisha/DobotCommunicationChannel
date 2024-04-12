@@ -173,7 +173,7 @@ cv2.createTrackbar("v high", "trackbars", v_high, 255, changeVHigh)
 
 cv2.setMouseCallback("frame", click)
 timer = current_time()
-porog_time = 1450
+porog_time = 885
 old_zone = -1
 letters = ""
 read = False
@@ -214,12 +214,14 @@ while True:
         cy = int(obj["m01"] / obj["m00"]) + y0
         cv2.circle(frame, (cx, cy), 20, (255, 0, 0), 3)
         if read:
-            if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx,
-                                                                                                             cy) != -1 and abs(
-                    cx - int(sum(lastestx) / 5)) <= 5 and abs(cy - int(sum(lastesty) / 5)) <= 5:
+            if (getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and
+                    getCurrentZone(cx, cy) != -1 and abs(cx - int(sum(lastestx) / 5)) <= 5 and
+                    abs(cy - int(sum(lastesty) / 5)) <= 5):
                 if getCurrentZone(cx, cy) == 10:
                     read = False
                     print(full_ans)
+                    full_ans = ""
+                    letters = ""
                 else:
                     letters += str(getCurrentZone(cx, cy))
                     print(letters)
