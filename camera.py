@@ -18,10 +18,10 @@ kx = 2.1
 ky = 3.1
 lastestx = [640 // 2, 640 // 2, 640 // 2, 640 // 2, 640 // 2]
 lastesty = [480 // 2, 480 // 2, 480 // 2, 480 // 2, 480 // 2]
-kzon1x = 1.0
+kzon1x = 0.6
 kzon2x = 1.1
-kzon1y = 1.5
-kzon2y = 1.5
+kzon1y = 1.6
+kzon2y = 1.4
 
 ABC = {'01': 'a',
        '02': 'b',
@@ -209,7 +209,6 @@ while True:
         cv2.circle(frame, (cx, cy), 20, (255, 0, 0), 3)
         if read:
             if getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and getCurrentZone(cx, cy) != -1 and abs(cx - int(sum(lastestx) / 5)) <= 5 and abs(cy - int(sum(lastesty) / 5)) <= 5:
-                print("yes")
                 if getCurrentZone(cx, cy) == 10:
                     read = False
                     print(full_ans)
