@@ -3,8 +3,6 @@ import time
 import pydobot
 from serial.tools import list_ports
 
-from camera import ABC as CBA
-
 available_ports = list_ports.comports()
 print(f'available ports: {[x.device for x in available_ports]}')
 port = available_ports[0].device
@@ -21,6 +19,38 @@ POSES = {'0': {'s': 'left', 'x': 0, 'y': -225.0, 'z': 55, 'r': -90},
          '7': {'s': 'right', 'x': 0, 'y': 340.0, 'z': 40, 'r': 90},
          '8': {'s': 'right', 'x': 0, 'y': 325.0, 'z': 127.0, 'r': 90},
          '9': {'s': 'right', 'x': 0, 'y': 215.0, 'z': -60, 'r': 90}}
+
+CBA = {'01': 'a',
+       '02': 'b',
+       '03': 'c',
+       '04': 'd',
+       '10': 'e',
+       '12': 'f',
+       '13': 'g',
+       '14': 'h',
+       '20': 'i',
+       '21': 'j',
+       '23': 'k',
+       '24': 'l',
+       '30': 'm',
+       '31': 'n',
+       '32': 'o',
+       '34': 'p',
+       '40': 'q',
+       '41': 'r',
+       '42': 's',
+       '43': 't',
+       '56': 'u',
+       '57': 'v',
+       '58': 'w',
+       '59': 'x',
+       '65': 'y',
+       '67': 'z',
+       '68': ' ',
+       '69': '.',
+       '75': ',',
+       '76': '!',
+       '78': '?'}
 
 ABC = {"a": "01",
        "b": "02",
@@ -61,6 +91,11 @@ sides = {"right": {"x": 225.5, "y": 212, "z": 60, "r": 45},
 
 device.speed(1000, 1000)
 
+# device.move_to(sides["right"]["x"], sides["right"]["y"],
+#                sides["right"]["z"], sides["right"]["r"], wait=True)
+# while True:
+#     y = input("fdf: ")
+#     device.move_to(POSES[y]["x"], POSES[y]["y"], POSES[y]["z"], POSES[y]["r"], wait=True)
 
 """
 Начало движения
