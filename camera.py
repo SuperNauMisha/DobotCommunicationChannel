@@ -172,10 +172,12 @@ cv2.createTrackbar("v low", "trackbars", v_low, 255, changeVLow)
 cv2.createTrackbar("v high", "trackbars", v_high, 255, changeVHigh)
 cv2.setMouseCallback("frame", click)
 timer = current_time()
-porog_time = 925
+cant_read_time = current_time()
+porog_time = 980
 old_zone = -1
 letters = ""
 read = False
+need_update_timer = False
 full_ans = ""
 while True:
     x0 = int(base[0] - abs(base[2] - base[0]) * kx)
@@ -215,7 +217,7 @@ while True:
         if read:
             if (getCurrentZone(cx, cy) == old_zone and current_time() - timer > porog_time and
                     getCurrentZone(cx, cy) != -1 and abs(cx - int(sum(lastestx) / 5)) <= 5 and
-                    abs(cy - int(sum(lastesty) / 5)) <= 5):
+                    abs(cy - int(sum(lastesty) / 5)) <= 5) and not need_update_timer:
                 if getCurrentZone(cx, cy) == 10:
                     read = False
                     print(full_ans)
@@ -232,10 +234,14 @@ while True:
                         except Exception:
                             print("Cannot find letter on index", letters)
                             letters = ""
-                timer = current_time()
+                need_update_timer = True
+                cant_read_time = current_time()
             elif getCurrentZone(cx, cy) != old_zone or abs(cx - int(sum(lastestx) / 5)) > 5 or abs(
                     cy - int(sum(lastesty) / 5)) > 5:
                 timer = current_time()
+            if need_update_timer and current_time() - cant_read_time > 300:
+                timer = current_time()
+                need_update_timer = False
         del lastestx[0]
         del lastesty[0]
         lastestx.append(cx)
