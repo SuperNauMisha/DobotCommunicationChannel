@@ -205,9 +205,12 @@ while True:
                     letters += str(getCurrentZone(cx, cy))
                     print(letters)
                     if len(letters) == 2:
-                        print(ABC[letters])
-                        full_ans += ABC[letters]
-                        letters = ""
+                        try:
+                            print(ABC[letters])
+                            full_ans += ABC[letters]
+                            letters = ""
+                        except Exception:
+                            print("Cannot find letter on index", letters)
                 timer = current_time()
             elif getCurrentZone(cx, cy) != old_zone or abs(cx - int(sum(lastestx) / 5)) > 5 or abs(cy - int(sum(lastesty) / 5)) > 5:
                 print("reset")
