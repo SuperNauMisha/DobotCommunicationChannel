@@ -92,32 +92,17 @@ def msg_out(word):
     for i in word:
         keys.append(alphabet[i])
 
-    # stor = POSES[keys[0][0]]["s"]
-    #
-    # device.move_to(sides["mid"]["x"], sides["mid"]["y"],
-    #                sides["mid"]["z"], sides["mid"]["r"], wait=False)
-    # device.move_to(sides[stor]["x"], sides[stor]["y"],
-    #                sides[stor]["z"], sides[stor]["r"], wait=False)
-
     for n, i in enumerate(keys):
         for j in i:
-            # if stor != POSES[j]["s"]:
-                # device.move_to(sides[stor]["x"], sides[stor]["y"],
-                #                sides[stor]["z"], sides[stor]["r"], wait=False)
-                # device.move_to(sides["mid"]["x"], sides["mid"]["y"],
-                #                sides["mid"]["z"], sides["mid"]["r"], wait=False)
-                # device.move_to(sides[POSES[j]["s"]]["x"], sides[POSES[j]["s"]]["y"],
-                #                sides[POSES[j]["s"]]["z"], sides[POSES[j]["s"]]["r"], wait=False)
-                # stor = POSES[j]["s"]
             device.angle(POSES[j]["j1"], POSES[j]["j2"], POSES[j]["j3"], wait=True)
             print(f"dobot came to position {j} in {i} for '{word[n]}' in {"".join(word)}")
-            time.sleep(2)
+            time.sleep(1.5)
 
     device.angle(sides["end"]["j1"], sides["end"]["j2"],
-                   sides["end"]["j3"], wait=True)
+                 sides["end"]["j3"], wait=True)
     time.sleep(2.5)
     device.angle(sides["mid"]["j1"], sides["mid"]["j2"],
-                   sides["mid"]["j3"], wait=False)
+                 sides["mid"]["j3"], wait=False)
     print("dobot's message is over")
     print("".join(word))
 
