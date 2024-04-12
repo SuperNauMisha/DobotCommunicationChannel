@@ -95,7 +95,7 @@ def msg_out(word):
                 stor = POSES[j]["s"]
             device.move_to(POSES[j]["x"], POSES[j]["y"], POSES[j]["z"], POSES[j]["r"], wait=True)
             print(f"dobot came to position {j} in {i} for '{word[n]}' in {"".join(word)}")
-            time.sleep(2.5)
+            time.sleep(2)
 
     device.move_to(sides[stor]["x"], sides[stor]["y"],
                    sides[stor]["z"], sides[stor]["r"], wait=False)
