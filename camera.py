@@ -172,7 +172,7 @@ cv2.createTrackbar("v low", "trackbars", v_low, 255, changeVLow)
 cv2.createTrackbar("v high", "trackbars", v_high, 255, changeVHigh)
 cv2.setMouseCallback("frame", click)
 timer = current_time()
-porog_time = 885
+porog_time = 925
 old_zone = -1
 letters = ""
 read = False

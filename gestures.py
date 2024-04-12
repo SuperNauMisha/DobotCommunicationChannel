@@ -85,7 +85,7 @@ def msg_out(word):
     device = pydobot.Dobot(port=port, verbose=False)
 
     word = word.lower()
-    device.speed(1000, 1000)
+    device.speed(1000, 5000)
 
     keys = []
 
