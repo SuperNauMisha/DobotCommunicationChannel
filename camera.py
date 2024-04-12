@@ -153,7 +153,7 @@ device = pydobot.Dobot(port=port, verbose=False)
 device.speed(1000, 1000)
 device.move_to(sides["mid"]["x"], sides["mid"]["y"],
                sides["mid"]["z"], sides["mid"]["r"], wait=True)
-
+device.close()
 
 cv2.namedWindow("trackbars")
 cv2.namedWindow("frame")
