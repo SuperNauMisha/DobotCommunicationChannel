@@ -231,9 +231,9 @@ while True:
         lastestx.append(cx)
         lastesty.append(cy)
         old_zone = getCurrentZone(cx, cy)
-    cv2.imshow("frame", frame)
     cv2.imshow("hsv Frame", hsv_frame)
     cv2.imshow("mask", mask)
+    cv2.imshow("frame", frame)
 
     if cv2.waitKey(1) == ord('r'):
         read = not read
