@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
 import time
+from gestures import msg_out
+
 cap = cv2.VideoCapture(0)
-
-
 h_low = 0
 h_high = 17
 s_low = 187
@@ -225,6 +225,12 @@ while True:
         read = not read
         timer = current_time()
         print("read = ", read)
+    if cv2.waitKey(1) == ord('w'):
+        read = False
+        # timer = current_time()
+        print("write mode")
+        send_data = input("Введите передаваемое сообщение:")
+        msg_out(send_data)
     if cv2.waitKey(1) == ord('q'):
         break
 
