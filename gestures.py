@@ -56,6 +56,7 @@ sides = {"right": {"x": 225.5, "y": 212, "z": 60, "r": 45},
 
 # device.move_to(sides["right"]["x"], sides["right"]["y"],
 #                sides["right"]["z"], sides["right"]["r"], wait=True)
+
 # while True:
 #     y = input("fdf: ")
 #     device.move_to(POSES[y]["x"], POSES[y]["y"], POSES[y]["z"], POSES[y]["r"], wait=True)
