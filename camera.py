@@ -225,10 +225,10 @@ while True:
                     letters = ""
                 else:
                     letters += str(getCurrentZone(cx, cy))
-                    print(f"dobot received the symbol {letters}")
+                    # print(letters)
                     if len(letters) == 2:
                         try:
-                            # print(ABC[letters])
+                            print(f"dobot received the symbol {ABC[letters]}")
                             full_ans += ABC[letters]
                             letters = ""
                         except Exception:
