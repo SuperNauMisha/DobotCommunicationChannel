@@ -258,7 +258,7 @@ while True:
         read = False
         # timer = current_time()
         print("write mode")
-        send_data = input("Введите передаваемое сообщение:")
+        send_data = input("Введите передаваемое сообщение: ")
         msg_out(send_data)
     if cv2.waitKey(1) == ord('q'):
         break

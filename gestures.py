@@ -71,17 +71,17 @@ def msg_out(word):
     device = pydobot.Dobot(port=port, verbose=False)
 
     word = word.lower()
-    device.speed(1000, 5000)
+    device.speed(1000, 1000)
 
     keys = []
 
     for i in word:
         keys.append(alphabet[i])
-
+    start = time.time()
     for n, i in enumerate(keys):
+        print(f"dobot is printing '{word[n]}' ({i})")
         for j in i:
             device.angle(POSES[j]["j1"], POSES[j]["j2"], POSES[j]["j3"], wait=True)
-            print(f"dobot came to position {j} in {i} for '{word[n]}' in {"".join(word)}")
             time.sleep(1)
 
     device.angle(sides["end"]["j1"], sides["end"]["j2"],
@@ -89,7 +89,7 @@ def msg_out(word):
     time.sleep(1.5)
     device.angle(sides["mid"]["j1"], sides["mid"]["j2"],
                  sides["mid"]["j3"], wait=False)
-    print("dobot's message is over")
+    print(f"dobot's message was sent in {round(time.time() - start, 1)} sec")
     print("".join(word))
 
     device.close()
